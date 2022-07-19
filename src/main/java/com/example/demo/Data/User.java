@@ -1,51 +1,31 @@
 package com.example.demo.Data;
 
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.Id;
+import lombok.Data;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-import java.time.LocalDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-@Document("users")
+import java.sql.Timestamp;
+import java.util.Date;
+
+@Data
+@Entity
 public class User {
-        @Id
-//    @GeneratedValue
-        private String id;
-        @Indexed(unique = true)
-        private String username;
-        @Indexed(unique = true)
-        private String phoneNum;
-        private String name;
+    @Id
+    @GeneratedValue
+    private Long id;
 
+    private String username;
+    private String name;
+    private Timestamp created_at;
 
-        public LocalDate created_at = LocalDate.now();
+    public User() {};
 
-        public User() {
-        }
-
-        ;
-
-        public String getPhoneNum() {
-            return phoneNum;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public User(String username, String name, String phoneNumber) {
-            this.username = username;
-            this.name = name;
-            created_at = LocalDate.now();
-            this.phoneNum = phoneNumber;
-        }
+    public User(String username, String name) {
+        this.username = username;
+        this.name = name;
+        Date date = new Date();
+        Long timestamp = date.getTime();
+        this.created_at = new Timestamp(timestamp);
+    }
 }
