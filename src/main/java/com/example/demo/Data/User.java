@@ -1,31 +1,49 @@
 package com.example.demo.Data;
 
-import lombok.Data;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.Id;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
-@Data
-@Entity
+import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+@Document("users")
 public class User {
     @Id
-    @GeneratedValue
-    private Long id;
-
+//    @GeneratedValue
+    private String id;
+    @Indexed(unique = true)
     private String username;
-    private String name;
-    private Timestamp created_at;
 
+    private String name;
+
+
+    public LocalDate created_at = LocalDate.now();
+    //private static SimpleDateFormat form1 = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss");
+   //private Date currDate = new Date();
+    //private Timestamp created_at;
     public User() {};
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public User(String username, String name) {
         this.username = username;
         this.name = name;
-        Date date = new Date();
-        Long timestamp = date.getTime();
-        this.created_at = new Timestamp(timestamp);
+        created_at = LocalDate.now();
+    }
+
+    @Override
+    public String toString() {
+        return "ID: "+this.id+"\nUsername: "+this.getUsername()+"\nName: "+this.name+"\nCreated at: "+ created_at;
     }
 }
