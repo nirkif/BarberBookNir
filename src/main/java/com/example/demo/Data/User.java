@@ -14,16 +14,15 @@ public class User {
     private String id;
     @Indexed(unique = true)
     private String username;
-
+    @Indexed(unique = true)
+    private String phoneNum;
     private String name;
 
 
     public LocalDate created_at = LocalDate.now();
-    //private static SimpleDateFormat form1 = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss");
-   //private Date currDate = new Date();
-    //private Timestamp created_at;
     public User() {};
 
+    public String getPhoneNum() { return phoneNum; }
     public String getUsername() {
         return username;
     }
@@ -36,14 +35,12 @@ public class User {
         return id;
     }
 
-    public User(String username, String name) {
+    public User(String username, String name, String phoneNumber) {
         this.username = username;
         this.name = name;
         created_at = LocalDate.now();
+        this.phoneNum = phoneNumber;
     }
 
-    @Override
-    public String toString() {
-        return "ID: "+this.id+"\nUsername: "+this.getUsername()+"\nName: "+this.name+"\nCreated at: "+ created_at;
-    }
+
 }

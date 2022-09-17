@@ -13,7 +13,6 @@ public interface IUserRepository extends MongoRepository<User, String> {
     @Query(value="{category:'?0'}", fields="{'name' : 1, 'quantity' : 1}")
     List<User> findAll(String category);
 
-    //find all barbers
 
     public long count();
 
