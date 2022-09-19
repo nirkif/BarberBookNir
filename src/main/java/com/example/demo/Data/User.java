@@ -9,41 +9,43 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 @Document("users")
 public class User {
-    @Id
+        @Id
 //    @GeneratedValue
-    private String id;
-    @Indexed(unique = true)
-    private String username;
+        private String id;
+        @Indexed(unique = true)
+        private String username;
+        @Indexed(unique = true)
+        private String phoneNum;
+        private String name;
 
-    private String name;
 
+        public LocalDate created_at = LocalDate.now();
 
-    public LocalDate created_at = LocalDate.now();
-    //private static SimpleDateFormat form1 = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss");
-   //private Date currDate = new Date();
-    //private Timestamp created_at;
-    public User() {};
+        public User() {
+        }
 
-    public String getUsername() {
-        return username;
-    }
+        ;
 
-    public String getName() {
-        return name;
-    }
+        public String getPhoneNum() {
+            return phoneNum;
+        }
 
-    public String getId() {
-        return id;
-    }
+        public String getUsername() {
+            return username;
+        }
 
-    public User(String username, String name) {
-        this.username = username;
-        this.name = name;
-        created_at = LocalDate.now();
-    }
+        public String getName() {
+            return name;
+        }
 
-    @Override
-    public String toString() {
-        return "ID: "+this.id+"\nUsername: "+this.getUsername()+"\nName: "+this.name+"\nCreated at: "+ created_at;
-    }
+        public String getId() {
+            return id;
+        }
+
+        public User(String username, String name, String phoneNumber) {
+            this.username = username;
+            this.name = name;
+            created_at = LocalDate.now();
+            this.phoneNum = phoneNumber;
+        }
 }
