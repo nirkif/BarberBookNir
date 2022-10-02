@@ -7,6 +7,10 @@ import java.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 @Document("users")
 public class User {
     @Id
@@ -15,14 +19,25 @@ public class User {
     @Indexed(unique = true)
     private String username;
     @Indexed(unique = true)
-    private String phoneNum;
+    private String phoneNumber;
+
     private String name;
+    private String classType = this.getClass().getSimpleName();
 
-
+    public String getClassType(){ return classType; }
+    public void setClassType(String classString) { this.classType = classString; }
     public LocalDate created_at = LocalDate.now();
-    public User() {};
 
-    public String getPhoneNum() { return phoneNum; }
+
+    public User() {
+    }
+
+    ;
+
+    public String getPhoneNum() {
+        return phoneNumber;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -39,8 +54,16 @@ public class User {
         this.username = username;
         this.name = name;
         created_at = LocalDate.now();
-        this.phoneNum = phoneNumber;
+        this.phoneNumber = phoneNumber;
+        this.toString();
     }
-
+    @Override
+    public String toString() {
+        return "userName:"+getUsername()+"\n" +
+                "name: "+getName()+"\n" +
+                "phoneNumber: "+getPhoneNum()+"\n" +
+                "created at: "+created_at+"\n" +
+                "type: "+classType;
+    }
 
 }

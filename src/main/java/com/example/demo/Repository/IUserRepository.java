@@ -8,11 +8,18 @@ import java.util.List;
 public interface IUserRepository extends MongoRepository<User, String> {
 
     @Query("{name:'?0'}")
-    User findUserByName(String name);
+    List<User> findUserByName(String name);
+
+    @Query("{username:'?0'}")
+    User findUserByUserName(String username);
+    @Query("{id:'?0'}")
+    User findUserById(String id);
+
+    @Query("{phoneNum:'?0'}")
+    User findUserByPhoneNumber(String phoneNum);
 
     @Query(value="{category:'?0'}", fields="{'name' : 1, 'quantity' : 1}")
     List<User> findAll(String category);
-
 
     public long count();
 
