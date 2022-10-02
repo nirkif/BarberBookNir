@@ -7,6 +7,7 @@ import com.example.demo.Repository.IUserRepository;
 import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.Update;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
@@ -39,10 +40,38 @@ public class OpeningController{
             System.out.println(err.toString());
         }
     }
-    @GetMapping("/allOpenings")
+    @GetMapping("/allOpenings/")
     List<Opening> allOpenings()
     {
         return openingRepository.findAll();
+    }
+
+    @GetMapping("/getOpenings/{username}")
+    List<Opening> getOpeningsByUserName(@PathVariable String username)
+    {
+
+        return openingRepository.findOpeningsByBarberUsername(username);
+    }
+
+    @DeleteMapping("/deleteOpening")
+
+    String deleteUserByID(@RequestBody String body)
+    {
+
+        JSONObject jsonObject = new JSONObject(body);
+        String id = jsonObject.getString("openingId");
+        try
+        {
+            if(openingRepository.findOpeningByID(id).getAvailability() == false)
+                return "cannot delete because opening already booked.";
+            openingRepository.deleteById(id);
+        }
+        catch (Exception err)
+        {
+            System.out.printf(err.toString());
+        }
+        System.out.printf("Opening "+id+" has been deleted.");
+        return "Opening "+id+" has been deleted.";
     }
 
 
@@ -54,6 +83,7 @@ public class OpeningController{
     {
         return null;
     }
+
 
 
 

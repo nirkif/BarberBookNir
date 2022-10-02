@@ -21,4 +21,8 @@ public interface IOpeningRepository extends MongoRepository<Opening, String>{
     @Query("{barberUsername:'?0', startTime:{ $gte: ?1, $lte: ?2 }}")
     List<Opening> findOpeningsInRangeByBarber(String barberUsername, LocalDateTime startTime, LocalDateTime endTime);
 
+    @Query("{barberUsername:'?0'")
+    List<Opening> findOpeningsByBarberUsername(String barberUsername);
+
+
 }

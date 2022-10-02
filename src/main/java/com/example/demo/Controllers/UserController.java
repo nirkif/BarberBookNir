@@ -5,6 +5,7 @@ import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.Data.User;
 import com.example.demo.Repository.IUserRepository;
 
+import org.json.JSONObject;
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,10 +31,12 @@ public class UserController{
     //                ||                      ||
 
     @PostMapping("/addUser")
-    User newUser(@RequestBody User newUser)
+    User newUser(@RequestBody String body)
     {
+        JSONObject jsonObject = new JSONObject(body);
         try
         {
+            User newUser = new User(jsonObject.getString("username"),jsonObject.getString("name"),jsonObject.getString("phoneNumber"));
             System.out.println(newUser.toString());
             return repository.save(newUser);
         }
@@ -92,10 +95,12 @@ public class UserController{
     //                ||   DELETE REQUESTS    ||
     //                ||                      ||
 
-    @DeleteMapping("deleteUser/{id}")
+    @DeleteMapping("/deleteUser")
 
-    Void deleteUserByID(@PathVariable String id)
+    Void deleteUserByID(@RequestBody String body)
     {
+        JSONObject jsonObject = new JSONObject(body);
+        String id = jsonObject.getString("id");
         try
         {
             repository.deleteById(id);

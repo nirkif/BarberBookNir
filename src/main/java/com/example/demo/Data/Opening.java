@@ -18,6 +18,8 @@ import java.util.Date;
 
 @Document("openings")
 public class Opening {  //    every opening must have half an hour
+
+
     @Id
     private String id;
     private String barberUserName;
@@ -27,8 +29,10 @@ public class Opening {  //    every opening must have half an hour
     public LocalDateTime endTime;
 
     public String openingInfo;
-    public Timestamp timeStamp;
-
+    public LocalDateTime timeStamp;
+    public String getId() {
+        return id;
+    }
     public String getBarberUserName(){ return this.barberUserName; }
     public void setBarberUserName(String userName) { this.barberUserName = userName; }
 
@@ -39,24 +43,20 @@ public class Opening {  //    every opening must have half an hour
     public boolean getAvailability(){return this.isAvailable; }
     public void setAvailability(boolean status) { this.isAvailable = status; }
 
-    public Opening(String username){
-        this.barberUserName = username;
-        timeStamp = new Timestamp(System.currentTimeMillis());
-        System.out.println("opening: \n"+" created succesfully");
 
-    }
+    public Opening(){}
     public Opening(String userName,String name,String startTime)
     {
-        timeStamp = new Timestamp(System.currentTimeMillis());
-        LocalDateTime date = LocalDateTime.of(timeStamp.toLocalDateTime().getYear(),
-                timeStamp.toLocalDateTime().getMonth(),
-                timeStamp.toLocalDateTime().getDayOfMonth(),
+        timeStamp = LocalDateTime.now();
+        LocalDateTime date = LocalDateTime.of(timeStamp.getYear(),
+                timeStamp.getMonth(),
+                timeStamp.getDayOfMonth(),
                 Integer.parseInt(startTime)
                 ,0);
 
         this.startTime = date;//date.toString().split("T")[0]+" "+date.toString().split("T")[1];
         this.endTime = date.plusMinutes(30);//date.toString().split("T")[0]+" "+date.toString().split("T")[1];;
-        this.openingInfo = "new opening created with "+this.barberName+"\n at "+date.toString().split("T")[0]
+        this.openingInfo = "new opening created with "+name+"\n at "+date.toString().split("T")[0]
                 +"from "+date.toString().split("T")[1]+" until "+date.toString().split("T")[1];
 
         this.barberUserName = userName;
